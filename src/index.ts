@@ -15,6 +15,7 @@ export * from './Network/models/cdnModel';
 export * from './Network/models/model';
 export * from './Chat/model';
 export * from './Network/helper';
+export * from './Chat/encrypt';
 
 export function InitChatSocket(url: string, token: string) {
   const chat = new ChatSocket(url, token);
