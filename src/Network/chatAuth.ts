@@ -91,10 +91,15 @@ export class ChatUser {
     return this.api.request<boolean>({
       method: 'GET',
       url: 'api/auth/user-relationship/check-block-user',
-      data: { userId },
+      params: { userId },
     });
   }
-
+  async getEncryptKey(): Promise<ResResults<boolean>> {
+    return this.api.request<boolean>({
+      method: 'GET',
+      url: 'api/auth/account/user-encrypt-key',
+    });
+  }
   // File Upload
   async upload({
     url,
