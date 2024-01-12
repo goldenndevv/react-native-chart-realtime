@@ -86,8 +86,3 @@ export interface userIsTypingResponse {
   roomId?: string;
   userId?: string;
 }
-export interface onReceiveEncryptKeyResponse {
-  roomId?: string;
-  userId?: string;
-  encryptKey: string;
-}

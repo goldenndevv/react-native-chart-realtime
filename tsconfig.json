@@ -1,6 +1,5 @@
-{"compilerOptions": {
-    "allowJs": true,
-    "checkJs": false,
+{
+  "compilerOptions": {
     "rootDir": ".",
     "paths": {
       "react-native-chat-realtime": ["./src/index"]

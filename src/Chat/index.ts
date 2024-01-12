@@ -6,7 +6,6 @@ import type {
   PinMessageProps,
   UnpinMessageProps,
   inputRevokeMessage,
-  onReceiveEncryptKeyResponse,
   onRevokeMessageResponse,
   pinMessageModel,
   reactMessageReactionResponse,
@@ -160,27 +159,5 @@ export class ChatSocket {
     this.socket.on('newGroupCreated', (message: userIsTypingResponse) => {
       callback(message);
     });
-  }
-  sendEncryptKey(groupId: string, encryptKey: string) {
-    this.socket.emit('sendEncryptKey', groupId, encryptKey);
-  }
-  onReceiveEncryptKey(callback: (data: onReceiveEncryptKeyResponse) => void) {
-    this.socket.on(
-      'onReceiveEncryptKey',
-      (message: onReceiveEncryptKeyResponse) => {
-        callback(message);
-      }
-    );
-  }
-  requestEncryptKey(groupId: string) {
-    this.socket.emit('requestEncryptKey', groupId);
-  }
-  onRequestEncryptKey(callback: (data: onReceiveEncryptKeyResponse) => void) {
-    this.socket.on(
-      'onRequestEncryptKey',
-      (message: onReceiveEncryptKeyResponse) => {
-        callback(message);
-      }
-    );
   }
 }
