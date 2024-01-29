@@ -7,12 +7,13 @@ import type {
   CreateChatRoomInput,
   RoomRequest,
   SearchRoomRequest,
-  UpdateResponeModel,
+  UpdateResponseModel,
   defaultResponseApi,
   inviteGroupMemberRequest,
   listRoomChatRequest,
   requestJoinListResponse,
   romChatModifyRequest,
+  searchRoomChatRequest,
   toggleGroupInviteLinkRes,
 } from './models/manager';
 
@@ -192,6 +193,17 @@ export class ChatManagement {
       params: data,
     });
   }
+
+  async listRoomChatSearch(
+    data: searchRoomChatRequest
+  ): Promise<ResResults<ChatRoomModel>> {
+    return this.api.request<ChatRoomModel>({
+      method: 'GET',
+      url: `api/chat-management/chat-groups/search-text-chat-in-participated-group/`,
+      params: data,
+    });
+  }
+
   async getInfoRoomChat(
     groupId: string
   ): Promise<ResResults<ChatRoomInformationModel>> {
@@ -237,20 +249,10 @@ export class ChatManagement {
     });
   }
 
-  async getUnreadOfEachAgent(
-    listAgents: string[]
-  ): Promise<Record<string, number>> {
-    return this.api.request<Record<string, number>>({
-      url: '/api/chat-management/chat-groups/total-unread-of-each-agent',
-      data: listAgents,
-      method: 'POST',
-    });
-  }
-
   async createRoomChat(
     data: CreateChatRoomInput
-  ): Promise<ResResults<UpdateResponeModel>> {
-    return this.api.request<UpdateResponeModel>({
+  ): Promise<ResResults<UpdateResponseModel>> {
+    return this.api.request<UpdateResponseModel>({
       method: 'POST',
       url: 'api/chat-management/chat-groups/chat-group',
       data: data,

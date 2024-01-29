@@ -15,7 +15,14 @@ export interface listRoomChatRequest {
   take: number;
   roomType?: number; //0,1,2
   status?: number; //0, 1, 2
+  isUnassign?: boolean;
+  isMyInbox?: boolean;
 }
+
+export interface searchRoomChatRequest extends listRoomChatRequest {
+  keyword?: string;
+}
+
 export interface SearchRoomRequest {
   filter?: string;
   roomType?: number; //0.1.2.
@@ -51,8 +58,7 @@ export type ChatRoomInfoRequest = Partial<{
   topic: string;
   status: number;
   participants: string[];
-  tags: string[];
-  isUpdateTag?: boolean;
+  tags?: string[];
 }>;
 export interface inviteGroupMemberRequest {
   groupId: string;
@@ -82,7 +88,7 @@ export interface ChatRoomItem {
     participant: string;
     timeLeave: string;
   }[];
-  status?: string;
+  status: string;
 }
 export interface lastMessageModel {
   id: string;
@@ -161,9 +167,11 @@ export interface ChatRoomInformationModel extends defaultResponseApi {
   minAgeAllow: number;
   isPrivate: boolean;
   localtionAllows: any;
-  tags?: string[];
+  isAdminApprove: boolean;
+
+  tags: string[];
 }
-export interface UpdateResponeModel extends ApiError {
+export interface UpdateResponseModel extends ApiError {
   id: string;
 }
 export interface defaultResponseApi extends AxiosResponse<any, any>, ApiError {}
