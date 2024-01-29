@@ -13,6 +13,8 @@ export interface listRoomChatRequest {
   tagFilter?: number; //1.2.3
   skip: number; //default 0
   take: number;
+  roomType?: number; //0,1,2
+  status?: number; //0, 1, 2
 }
 export interface SearchRoomRequest {
   filter?: string;
@@ -20,7 +22,7 @@ export interface SearchRoomRequest {
   skip: number; //default 0
   take: number;
 }
-export interface RoonRequest {
+export interface RoomRequest {
   filter?: string;
   groupId?: string;
   roomType?: number; //0.1.2.
@@ -36,21 +38,22 @@ export interface CreateChatRoomInput {
   name: string;
   roomType: number;
   typeOfGroup: number;
-  topic: string;
-  description: string;
+  topic?: string;
+  description?: string;
   image: string;
   ownerId: string;
   participants: string[];
-  tags: string[];
+  tags?: string[];
   sendDefaultMessage: boolean;
-  defaultMessageContent: string;
+  defaultMessageContent?: string;
 }
-export interface ChatRoomInfoRequest {
-  name: string;
+export type ChatRoomInfoRequest = Partial<{
   topic: string;
-  description: string;
-  image: string;
-}
+  status: number;
+  participants: string[];
+  tags: string[];
+  isUpdateTag?: boolean;
+}>;
 export interface inviteGroupMemberRequest {
   groupId: string;
   userId: string[];
@@ -79,6 +82,7 @@ export interface ChatRoomItem {
     participant: string;
     timeLeave: string;
   }[];
+  status?: string;
 }
 export interface lastMessageModel {
   id: string;
@@ -101,6 +105,7 @@ export interface participantInfoModel {
   nickName: string;
   avatar: string;
   onlineStatus: number;
+  userId: string;
 }
 
 export interface Attachment {
@@ -131,15 +136,15 @@ export interface ChatRoomItemSearchModel {
   participantCount: number;
 }
 
-export interface ChatRoomInfomationModel extends defaultResponseApi {
+export interface ChatRoomInformationModel extends defaultResponseApi {
   id: string;
   createdOn: string;
   name: string;
   roomType: number;
   typeOfGroup: number;
-  topic: string;
-  description: string;
-  image: string;
+  topic: any;
+  description: any;
+  image: any;
   ownerId: string;
   participants: string[];
   participantCount: number;
@@ -148,15 +153,15 @@ export interface ChatRoomInfomationModel extends defaultResponseApi {
   unreadCount: number;
   hasUnreadMessage: boolean;
   isLinkEnabled: boolean;
-  inviteLinkKey: string;
-  labelAllows: string[];
-  statusAllows: string[];
-  sexAllows: string[];
+  inviteLinkKey: any;
+  labelAllows: any;
+  statusAllows: any;
+  sexAllows: any;
   maxAgeAllow: number;
   minAgeAllow: number;
   isPrivate: boolean;
-  locationAllows: string[];
-  isAdminApprove: boolean;
+  localtionAllows: any;
+  tags?: string[];
 }
 export interface UpdateResponeModel extends ApiError {
   id: string;

@@ -33,7 +33,9 @@ export class ChatSocket {
       console.log('connected to socket server');
     });
   }
-
+  off(event: string) {
+    this.socket.off(event);
+  }
   disconnect() {
     this.socket.disconnect();
   }
@@ -76,7 +78,13 @@ export class ChatSocket {
     });
   }
   pinMessage(data: PinMessageProps) {
-    this.socket.emit('pinMessage', data);
+    this.socket.emit(
+      'pinMessage',
+      data.messageId,
+      data.groupId,
+      data.displayName,
+      data.messageContent
+    );
   }
   receivePinMessage(callback: (data: pinMessageModel) => void) {
     this.socket.on('receivePinMessage', (message: pinMessageModel) => {
@@ -91,8 +99,19 @@ export class ChatSocket {
       callback(message);
     });
   }
+  receiveTotalUnread(callback: (data: any) => void) {
+    this.socket.on('receiveTotalUnread', (data: any) => callback(data));
+  }
+  getTotalUnread(userId: string) {
+    this.socket.emit('getTotalUnread', userId);
+  }
   reactMessage(data: reactMessageReactionResponse) {
-    this.socket.emit('reactMessage', data);
+    this.socket.emit(
+      'reactMessage',
+      data.messageId,
+      data.groupId,
+      data.reactionCode
+    );
   }
   receiveMessageReaction(
     callback: (data: reactMessageReactionResponse) => void
@@ -116,7 +135,13 @@ export class ChatSocket {
     );
   }
   revokeMessage(data: inputRevokeMessage) {
-    this.socket.emit('revokeMessage', data);
+    this.socket.emit(
+      'revokeMessage',
+      data.messageId,
+      data.groupId,
+      data.revokeStatus,
+      data.timeSend
+    );
   }
   onRevokeMessage(callback: (data: onRevokeMessageResponse) => void) {
     this.socket.on('onRevokeMessage', (message: onRevokeMessageResponse) => {
@@ -124,7 +149,13 @@ export class ChatSocket {
     });
   }
   revokeAttachment(data: inputRevokeMessage) {
-    this.socket.emit('revokeAttachment', data);
+    this.socket.emit(
+      'revokeAttachment',
+      data.messageId,
+      data.attachmentId,
+      data.groupId,
+      data.revokeStatus
+    );
   }
   onRevokeAttachment(callback: (data: onRevokeMessageResponse) => void) {
     this.socket.on('onRevokeAttachment', (message: onRevokeMessageResponse) => {
@@ -155,9 +186,51 @@ export class ChatSocket {
       callback(message);
     });
   }
-  newGroupCreated(callback: (data: userIsTypingResponse) => void) {
-    this.socket.on('newGroupCreated', (message: userIsTypingResponse) => {
+  newGroupCreated(callback: (data: any) => void) {
+    this.socket.on('newGroupCreated', (message: any) => {
       callback(message);
     });
+  }
+  newGroupObjCreated(callback: (data: any) => void) {
+    this.socket.on('newGroupObjCreated', (message: any) => {
+      callback(message);
+    });
+  }
+  unseenMessageStatus(groupId: string, customerId: string) {
+    this.socket.emit('setMessageUnseenStatus', groupId, customerId);
+  }
+  receiveUnseenMessageStatus(
+    callback: (data: { roomId: string; userId: string }) => void
+  ) {
+    this.socket.on(
+      'receiveMessageUnseenStatus',
+      (data: { roomId: string; userId: string }) => {
+        callback(data);
+      }
+    );
+  }
+  receiveUnseenMessageCount(
+    callback: (data: { groupId: string; messageUnread: number }) => void
+  ) {
+    this.socket.on(
+      'receiveUnseenMessageCount',
+      (data: { groupId: string; messageUnread: number }) => callback(data)
+    );
+  }
+
+  customEvent<T>(eventName: string, data: T) {
+    this.socket.emit(eventName, data);
+  }
+
+  customEventReceive<T>(eventName: string, callback: (data: T) => void) {
+    this.socket.on(eventName, (data: T) => {
+      callback(data);
+    });
+  }
+  sendEncryptKey(groupId: string, encryptKey: string) {
+    this.socket.emit('sendEncryptKey', groupId, encryptKey);
+  }
+  requestEncryptKey(groupId: string) {
+    this.socket.emit('sendEncryptKey', groupId);
   }
 }

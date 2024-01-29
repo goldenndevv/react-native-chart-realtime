@@ -77,7 +77,7 @@ export class Api {
     this.baseUrl = url;
     this.axios = axios.create({
       baseURL: this.baseUrl,
-      timeout: 5000,
+      timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -87,7 +87,9 @@ export class Api {
       this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
   }
-  public async request<T>(config: AxiosRequestConfig): Promise<ResResults<T>> {
+  public async request<T>(
+    config: AxiosRequestConfig
+  ): Promise<ResResults<T> | any> {
     try {
       const response: AxiosResponse<T> = await this.axios.request(config);
       return {

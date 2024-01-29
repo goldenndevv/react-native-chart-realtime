@@ -98,7 +98,9 @@ export class MessageReader {
     data: searchMessegeInGroupReq;
   }): Promise<ResResults<searchMessegeInGroupRes>> {
     return this.request('POST', `api/messagereader/message/search/${roomId}`, {
-      data: data,
+      params: {
+        ...data,
+      },
     });
   }
 

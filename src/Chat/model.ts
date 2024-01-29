@@ -13,17 +13,17 @@ export interface attachmentsModel {
   id?: string; // id attachments (send id = null or string)
   url: string; // url file
   urlPreView?: string;
-  typeAttachment: 1; // - video = 1,  // - audio = 2// - image = 3// - file = 4 // - other = 5
+  typeAttachment: number; // - video = 1,  // - audio = 2// - image = 3// - file = 4 // - other = 5
   messageId?: string;
   sizeByte?: number;
   durationSeconds?: number;
-  revoke: number; // 1 revoke
+  revoke?: number; // 1 revoke
 }
 export interface MessageUpdateProp {
   message: string;
 }
 export type ChatMessageModel = Partial<{
-  attachments: string[];
+  attachments?: attachmentsModel[];
   forwardFromMessageId: string;
   forwardFromRoomId: string;
   mentionIds: string[];
@@ -74,6 +74,7 @@ export interface inputRevokeMessage {
   groupId: string;
   revokeStatus: number;
   attachmentId?: string;
+  timeSend: string;
 }
 export interface onRevokeMessageResponse {
   messageId?: string;

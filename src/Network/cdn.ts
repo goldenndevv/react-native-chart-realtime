@@ -1,11 +1,11 @@
 import { Api, type ResResults } from './helper';
 import type { AccessTokenResponse } from './models/auth';
-import type { defaultResponseApi } from './models/manager';
 import type {
   RequestListModel,
   listEmojiResponse,
   listStickerModel,
 } from './models/cdnModel';
+import type { defaultResponseApi } from './models/manager';
 
 export class ChatCdn {
   baseUrl: string;

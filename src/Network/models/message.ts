@@ -15,7 +15,6 @@ export interface historyAttachmentReq {
   before?: string; //
   after?: string; //messageid after
   types?: number[]; // -   VIDEO = 1,AUDIO = 2,IMAGE = 3,FILE = 4,OTHER = 5
-
   skip?: number; // point start record
   take?: number; // The number of records retrieved
 }

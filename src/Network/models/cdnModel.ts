@@ -21,3 +21,12 @@ export interface listStickerModel {
   }[];
   totalCount: number;
 }
+export interface responseUpload {
+  id: string;
+  publicId: string;
+  fileExtension: string;
+  contentType: string;
+  name: string;
+  creationTime: string;
+  url: string;
+}

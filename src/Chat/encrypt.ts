@@ -4,9 +4,9 @@ export const generateKeyPair = async (): Promise<KeyPair> => {
   const valueKeys = await RSA.generateKeys(2048);
   return valueKeys;
 };
-export const encryptMessage = async (
-  plaintext: string,
-  publicKeyArmored: string
+export const encryptString = async (
+  publicKeyArmored: string,
+  plaintext: string
 ) => {
   try {
     const encrypted = await RSA.encrypt(plaintext, publicKeyArmored);
@@ -16,9 +16,9 @@ export const encryptMessage = async (
     return error?.toString() || '';
   }
 };
-export const decryptMessage = async (
-  encryptedMessage: string,
-  privateKeyArmored: string
+export const decryptString = async (
+  privateKeyArmored: string,
+  encryptedMessage: string
 ) => {
   try {
     const decrypted = await RSA.decrypt(encryptedMessage, privateKeyArmored);

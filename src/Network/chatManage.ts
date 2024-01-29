@@ -1,11 +1,11 @@
 import { Api, type ResResults } from './helper';
 import type {
   ChatRoomInfoRequest,
-  ChatRoomInfomationModel,
+  ChatRoomInformationModel,
   ChatRoomListSearchModel,
   ChatRoomModel,
   CreateChatRoomInput,
-  RoonRequest,
+  RoomRequest,
   SearchRoomRequest,
   UpdateResponeModel,
   defaultResponseApi,
@@ -177,7 +177,7 @@ export class ChatManagement {
   async getTotalUnread(): Promise<ResResults<any>> {
     return this.api.request<any>({
       method: 'GET',
-      url: 'api/chat-management/chat-groups/total-unread',
+      url: `api/chat-management/chat-groups/total-unread`,
     });
   }
 
@@ -194,8 +194,8 @@ export class ChatManagement {
   }
   async getInfoRoomChat(
     groupId: string
-  ): Promise<ResResults<ChatRoomInfomationModel>> {
-    return this.api.request<ChatRoomInfomationModel>({
+  ): Promise<ResResults<ChatRoomInformationModel>> {
+    return this.api.request<ChatRoomInformationModel>({
       method: 'GET',
       url: `api/chat-management/chat-groups/chat-group-by-id/${groupId}`,
     });
@@ -205,7 +205,7 @@ export class ChatManagement {
     data,
   }: {
     groupId: string;
-    data: RoonRequest;
+    data: RoomRequest;
   }): Promise<ResResults<ChatRoomModel>> {
     return this.api.request<ChatRoomModel>({
       method: 'GET',
@@ -213,6 +213,7 @@ export class ChatManagement {
       params: data,
     });
   }
+
   async setFavoriteGroup({
     groupId,
     isFavorite,
@@ -227,12 +228,22 @@ export class ChatManagement {
     });
   }
   async getFavoriteGroup(
-    param: RoonRequest
+    param: RoomRequest
   ): Promise<ResResults<ChatRoomModel>> {
     return this.api.request<ChatRoomModel>({
       method: 'GET',
       url: `api/chat-management/chat-groups/favorite-group-list`,
       params: param,
+    });
+  }
+
+  async getUnreadOfEachAgent(
+    listAgents: string[]
+  ): Promise<Record<string, number>> {
+    return this.api.request<Record<string, number>>({
+      url: '/api/chat-management/chat-groups/total-unread-of-each-agent',
+      data: listAgents,
+      method: 'POST',
     });
   }
 
