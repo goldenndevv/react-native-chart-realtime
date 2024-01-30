@@ -2,11 +2,11 @@ import { ChatSocket } from './Chat';
 import { ChatUser } from './Network/chatAuth';
 import { ChatManagement } from './Network/chatManage';
 import { MessageReader } from './Network/messageReader';
+import { ChatCdn } from './Network/cdn';
 
 export * from './Chat';
 export * from './Network/messageReader';
 export * from './Network/chatManage';
-export * from './Network/chatAuth';
 export * from './Network/chatAuth';
 export * from './Network/models/message';
 export * from './Network/models/auth';
@@ -16,9 +16,14 @@ export * from './Network/models/model';
 export * from './Chat/model';
 export * from './Network/helper';
 export * from './Chat/encrypt';
+export * from './Network/cdn';
 
 export function InitChatSocket(url: string, token: string) {
   const chat = new ChatSocket(url, token);
+  return chat;
+}
+export function InitCDN(url: string, token: string) {
+  const chat = new ChatCdn(url, token);
   return chat;
 }
 
