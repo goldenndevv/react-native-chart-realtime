@@ -1,6 +1,6 @@
 {
   "name": "react-native-chat-realtime",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "create reatime chat with E2E encrytion",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -39,7 +39,6 @@
     "ios",
     "android"
   ],
-
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
