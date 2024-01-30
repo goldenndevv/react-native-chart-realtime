@@ -1,6 +1,6 @@
 {
   "name": "react-native-chat-realtime",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "create reatime chat with E2E encrytion",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
