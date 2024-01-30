@@ -1,5 +1,4 @@
 import { Api, type ResResults } from './helper';
-import type { AccessTokenResponse } from './models/auth';
 import type {
   RequestListModel,
   listEmojiResponse,
@@ -20,11 +19,25 @@ export class ChatCdn {
   }
 
   async uploadEmoji(data: FormData): Promise<ResResults<any>> {
-    return this.api.request<AccessTokenResponse>({
+    return this.api.request<any>({
       method: 'POST',
       url: 'api/cdn/emoji/upload',
       data,
       headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
+  async getEmoji(emojiName: string): Promise<ResResults<any>> {
+    return this.api.request<any>({
+      method: 'GET',
+      url: 'api/cdn/emoji/emoji-image',
+      params: { emojiName },
+    });
+  }
+  async deleteEmoji(emojiName: string): Promise<ResResults<any>> {
+    return this.api.request<any>({
+      method: 'DELETE',
+      url: 'api/cdn/emoji/emoji-image',
+      params: { emojiName },
     });
   }
 
@@ -74,6 +87,14 @@ export class ChatCdn {
   }
 
   // File Upload
+  async fileUpload(data: FormData): Promise<ResResults<any>> {
+    return this.api.request<any>({
+      method: 'POST',
+      url: 'file/upload',
+      data,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
   async upload(url: string, data: FormData): Promise<ResResults<any>> {
     return this.api.request<any>({
       method: 'POST',

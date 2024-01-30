@@ -87,3 +87,8 @@ export interface checkBlockUserRes {
   receiverBlock: boolean;
   blockerId: string;
 }
+export interface encryptResponse {
+  encKey: string;
+  pubKey: string;
+  keyType: string;
+}

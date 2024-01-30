@@ -1,4 +1,5 @@
 import { Api, type ResResults } from './helper';
+import type { encryptResponse } from './models/auth';
 import type {
   ChatRoomInfoRequest,
   ChatRoomInformationModel,
@@ -47,8 +48,8 @@ export class ChatManagement {
   }
 
   async setAddmin(params: {
-    groupid: string;
-    userid: string;
+    groupId: string;
+    userId: string;
     isAdmin: boolean;
   }): Promise<ResResults<defaultResponseApi>> {
     return this.api.request<defaultResponseApi>({
@@ -59,8 +60,8 @@ export class ChatManagement {
   }
 
   async setModerator(params: {
-    groupid: string;
-    userid: string;
+    groupId: string;
+    userId: string;
     isModerator: boolean;
   }): Promise<ResResults<defaultResponseApi>> {
     return this.api.request<defaultResponseApi>({
@@ -74,8 +75,8 @@ export class ChatManagement {
   }
 
   async setDiamond(params: {
-    groupid: string;
-    userid: string;
+    groupId: string;
+    userId: string;
     isDiamond?: boolean;
     level: number;
   }): Promise<ResResults<defaultResponseApi>> {
@@ -90,8 +91,8 @@ export class ChatManagement {
   }
 
   async setIgnoredUser(params: {
-    groupid: string;
-    userid: string;
+    groupId: string;
+    userId: string;
     isIgnored: boolean;
   }): Promise<ResResults<defaultResponseApi>> {
     return this.api.request<defaultResponseApi>({
@@ -102,8 +103,8 @@ export class ChatManagement {
   }
 
   async setMuteUser(params: {
-    groupid: string;
-    userid: string;
+    groupId: string;
+    userId: string;
     isMute: boolean;
   }): Promise<ResResults<defaultResponseApi>> {
     return this.api.request<defaultResponseApi>({
@@ -114,13 +115,13 @@ export class ChatManagement {
   }
 
   async requestJoinList(data: {
-    groupid: string;
+    groupId: string;
     skip?: number;
     take?: number;
   }): Promise<ResResults<requestJoinListResponse>> {
     return this.api.request<requestJoinListResponse>({
       method: 'POST',
-      url: `api/chat-management/group-setting/request-join-list/${data.groupid}`,
+      url: `api/chat-management/group-setting/request-join-list/${data.groupId}`,
       params: {
         skip: data.skip ?? 0,
         take: data.take ?? 100,
@@ -249,6 +250,16 @@ export class ChatManagement {
     });
   }
 
+  async getUnreadOfEachAgent(
+    listAgents: string[]
+  ): Promise<Record<string, number>> {
+    return this.api.request<Record<string, number>>({
+      url: '/api/chat-management/chat-groups/total-unread-of-each-agent',
+      data: listAgents,
+      method: 'POST',
+    });
+  }
+
   async createRoomChat(
     data: CreateChatRoomInput
   ): Promise<ResResults<UpdateResponseModel>> {
@@ -279,6 +290,23 @@ export class ChatManagement {
     return this.api.request<defaultResponseApi>({
       method: 'DELETE',
       url: `api/chat-management/chat-groups/${roomId}/chat-group`,
+    });
+  }
+  async changeGroupOwner(data: {
+    id: string;
+    ownerId: string;
+    newOwnerId: string;
+  }): Promise<ResResults<defaultResponseApi>> {
+    return this.api.request<defaultResponseApi>({
+      method: 'POST',
+      url: `api/chat-management/chat-groups/${data.id}/change-chat-group-owner`,
+      data: data,
+    });
+  }
+  async groupEncryptKey(GroupId: string): Promise<ResResults<encryptResponse>> {
+    return this.api.request<encryptResponse>({
+      method: 'GET',
+      url: `api/chat-management/chat-groups/group-encrypt-key/${GroupId}`,
     });
   }
 
@@ -367,6 +395,16 @@ export class ChatManagement {
       method: 'POST',
       url: 'api/chat-management/chat-groups/user-hide-chat-group',
       data: { groupId },
+    });
+  }
+  async messageByIds(data: {
+    groupId: string;
+    messageIds: string[];
+  }): Promise<ResResults<defaultResponseApi>> {
+    return this.api.request<defaultResponseApi>({
+      method: 'GET',
+      url: `api/chat-management/chat-groups/message-by-ids/${data.groupId}`,
+      params: { messageIds: data.messageIds },
     });
   }
   async toggleGroupNotify({

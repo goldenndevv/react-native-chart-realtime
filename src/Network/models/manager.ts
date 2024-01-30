@@ -14,6 +14,7 @@ export interface listRoomChatRequest {
   skip: number; //default 0
   take: number;
   roomType?: number; //0,1,2
+  agent?: string;
   status?: number; //0, 1, 2
   isUnassign?: boolean;
   isMyInbox?: boolean;
@@ -168,7 +169,6 @@ export interface ChatRoomInformationModel extends defaultResponseApi {
   isPrivate: boolean;
   localtionAllows: any;
   isAdminApprove: boolean;
-
   tags: string[];
 }
 export interface UpdateResponseModel extends ApiError {

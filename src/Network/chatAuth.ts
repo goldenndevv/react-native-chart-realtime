@@ -4,6 +4,7 @@ import type {
   UserCredentials,
   UserRegisterReq,
   checkBlockUserRes,
+  encryptResponse,
   listUserContactAddRes,
   listUserRequest,
   listUserRes,
@@ -94,20 +95,22 @@ export class ChatUser {
       data: { userId },
     });
   }
-
-  // File Upload
-  async upload({
-    url,
-    data,
-  }: {
-    url: string;
-    data: FormData;
-  }): Promise<ResResults<any>> {
+  async userEncryptKey(): Promise<ResResults<encryptResponse>> {
+    return this.api.request<encryptResponse>({
+      method: 'GET',
+      url: 'api/auth/account/user-encrypt-key',
+    });
+  }
+  async deleteEncryptKey(): Promise<ResResults<any>> {
     return this.api.request<any>({
-      method: 'POST',
-      url,
-      data,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      method: 'DELETE',
+      url: 'api/auth/account/user-encrypt-key',
+    });
+  }
+  async totalUser(): Promise<ResResults<any>> {
+    return this.api.request<any>({
+      method: 'GET',
+      url: 'api/auth/user-relationship/total-user',
     });
   }
 }
