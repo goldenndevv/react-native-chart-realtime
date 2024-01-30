@@ -39,16 +39,7 @@
     "ios",
     "android"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MinhQuang28/react-native-chat-realtime.git"
-  },
-  "author": "MinhQuang28 <50353523+MinhQuang28@users.noreply.github.com> (https://github.com/MinhQuang28)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/MinhQuang28/react-native-chat-realtime/issues"
-  },
-  "homepage": "https://github.com/MinhQuang28/react-native-chat-realtime#readme",
+
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
