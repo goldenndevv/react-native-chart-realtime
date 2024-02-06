@@ -5,6 +5,7 @@ import type {
   MessageUpdateProp,
   PinMessageProps,
   UnpinMessageProps,
+  baseResponse,
   inputRevokeMessage,
   onRevokeMessageResponse,
   pinMessageModel,
@@ -26,6 +27,20 @@ export class ChatSocket {
     });
     this.token = token;
   }
+  // private setupSocketListeners() {
+  //   this.socket.on('connect', () => {
+  //     console.log('connected to socket server');
+  //   });
+
+  //   this.socket.on('unauthorized', () => {
+  //     console.log('socket unauthorized');
+  //     // Refresh the token using the refreshToken
+  //     // Replace the code below with your actual token refreshing logic
+  //     this.refreshToken = refreshTokenLogic(this.refreshToken);
+  //     this.socket.io.opts.query = { token: this.token };
+  //     this.socket.connect();
+  //   });
+  // }
 
   connect() {
     this.socket.connect();
@@ -52,6 +67,9 @@ export class ChatSocket {
   }
   setMessageSeenStatus(messageId: string, groupId: string) {
     this.socket.emit('setMessageSeenStatus', groupId, messageId);
+  }
+  setMessageSeenUserStatus(userIds: string[], groupId: string) {
+    this.socket.emit('setMessageSeenUserStatus', groupId, userIds);
   }
   deleteMessage(messageId: string, groupId: string) {
     this.socket.emit('deleteMessage', messageId, groupId);
@@ -134,6 +152,18 @@ export class ChatSocket {
       }
     );
   }
+
+  receiveMessageSeenUserStatus(
+    callback: (data: { groupId: string; userIds: string[] }) => void
+  ) {
+    this.socket.on(
+      'receiveMessageSeenUserStatus',
+      (data: { groupId: string; userIds: string[] }) => {
+        callback(data);
+      }
+    );
+  }
+
   revokeMessage(data: inputRevokeMessage) {
     this.socket.emit(
       'revokeMessage',
@@ -218,6 +248,12 @@ export class ChatSocket {
     );
   }
 
+  deletedGroup(callback: (data: { roomId: string }) => void) {
+    this.socket.on('deletedGroup', (data: { roomId: string }) =>
+      callback(data)
+    );
+  }
+
   customEvent<T>(eventName: string, data: T) {
     this.socket.emit(eventName, data);
   }
@@ -227,10 +263,20 @@ export class ChatSocket {
       callback(data);
     });
   }
+  requestEncryptKey(groupId: string) {
+    this.socket.emit('requestEncryptKey', groupId);
+  }
+  onRequestEncryptKey(callback: (data: baseResponse) => void) {
+    this.socket.on('onRequestEncryptKey', (data: baseResponse) => {
+      callback(data);
+    });
+  }
   sendEncryptKey(groupId: string, encryptKey: string) {
     this.socket.emit('sendEncryptKey', groupId, encryptKey);
   }
-  requestEncryptKey(groupId: string) {
-    this.socket.emit('sendEncryptKey', groupId);
+  onReceiveEncryptKey(callback: (data: baseResponse) => void) {
+    this.socket.on('onReceiveEncryptKey', (data: baseResponse) => {
+      callback(data);
+    });
   }
 }

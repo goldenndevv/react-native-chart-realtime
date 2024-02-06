@@ -87,3 +87,9 @@ export interface userIsTypingResponse {
   roomId?: string;
   userId?: string;
 }
+
+export interface baseResponse {
+  roomId?: string;
+  userId?: string;
+  encryptKey?: string;
+}
